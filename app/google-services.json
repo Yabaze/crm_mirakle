@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "832955974441",
+    "firebase_url": "https://customerrelationshipmana-cf772.firebaseio.com",
+    "project_id": "customerrelationshipmana-cf772",
+    "storage_bucket": "customerrelationshipmana-cf772.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832955974441:android:b07e7756a20a09d8",
+        "android_client_info": {
+          "package_name": "com.thomas.mirakle.crm_mirakle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832955974441-mb9u6h7mvmm062s0tg2dan16de9ge05l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thomas.mirakle.crm_mirakle",
+            "certificate_hash": "945d387c4f491e1fc8d2155532725609723b5dc5"
+          }
+        },
+        {
+          "client_id": "832955974441-atkrhs9nlfui8udv2ti48gm8gbjbfua1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUbnsH5grHdX1TqYZBEX_XNBAgjcOmoQk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832955974441-atkrhs9nlfui8udv2ti48gm8gbjbfua1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
