@@ -175,9 +175,16 @@ public class MainActivity extends AppCompatActivity {
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(MainActivity.this,forgot_password.class);
+                startActivity(intent);
             }
         });
+
+
+
+
+
+
     }
 
     private void handleFacebookAccessToken(AccessToken token) {

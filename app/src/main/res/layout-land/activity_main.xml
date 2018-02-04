@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background_rotate"
+    tools:context="com.thomas.mirakle.crm_mirakle.MainActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <Button
+        android:id="@+id/g_signin_button"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="120dp"
+        android:background="@drawable/cool_bk"
+        android:fontFamily="sans-serif"
+        android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/twitter" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/username_layout"
+        android:layout_width="266dp"
+        android:layout_height="85dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/password_layout"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/u_name"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="266dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:drawablePadding="1dp"
+            android:ems="10"
+            android:fontFamily="serif"
+            android:hint="@string/username"
+            android:inputType="textPersonName"
+            android:singleLine="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/pass"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password_layout"
+        android:layout_width="266dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="62dp"
+        app:layout_constraintBottom_toTopOf="@+id/forgot"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/pass"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="266dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="serif"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/forgot"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="213dp"
+        android:layout_height="213dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginTop="87dp"
+        android:background="@drawable/login_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="cursive"
+        android:lineSpacingExtra="30sp"
+        android:text="@string/login"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/twitter"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/twitter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/forgot"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginStart="124dp"
+        android:text=""
+        android:textAllCaps="false"
+        android:textColor="?android:attr/colorForeground"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/fb_login_button"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Forgot Password?" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="37dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/twitter"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        style="@style/AlertDialog.AppCompat"
+        android:layout_width="60dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="160dp"
+        android:background="@drawable/facebook"
+        android:backgroundTint="@color/cardview_shadow_end_color"
+        android:foreground="@drawable/facebook"
+        android:textAlignment="center"
+        android:textColor="@color/cardview_shadow_end_color"
+        android:textSize="36sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/g_signin_button" />
+
+</android.support.constraint.ConstraintLayout>

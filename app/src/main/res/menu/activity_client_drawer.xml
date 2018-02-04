@@ -6,23 +6,22 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/lead"
+            android:title="Create Lead" />
+        <item
+            android:id="@+id/nav_chat"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Chat" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="About" />
     </group>
 
     <item android:title="Communicate">
@@ -33,11 +32,12 @@
                 android:title="Share"
                 />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_help"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/support" />
             <item
                 android:id="@+id/logout_btn"
+                android:icon="@android:drawable/ic_lock_power_off"
                 android:title="LogOut" />
         </menu>
     </item>

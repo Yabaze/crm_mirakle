@@ -15,6 +15,31 @@
     <string name="mail">cool.mirakle@gmail.com</string>
     <string name="facebook_app_id">191689594909146</string>
     <string name="fb_login_protocol_scheme">fb191689594909146</string>
-
+    <string name="support">Help &amp; Support</string>
+    <string name="contact_us">
+        Email:ramesh@dryairdesiccant.com
+        Mobile: +91-9943691024
+        Dry Air Technologies
+        Silamalai - 625528
+        Bodinayakanur, Theni Dist
+        Tamil Nadu, India
+        Phone: +91-4546293336,293337
+        Mobile: +91-9943691024
+        Email:office@dryairdesiccant.com</string>
+    <string name="home_content">
+        <ul><li>\n\t\tDry Air Technologies - India is an well established manufacturing organization of specially Container Desiccants since 2007.</li>
+        It is well equipped and serving all types of exporters globally to prevent their Export goods from moisture and condensation issues by a well Technical experts. We offer wide range of container desiccants in various sizes and types which ever fits the customer needs.
+        We shall provide an error free service and timely delivery at any where globally.
+        Ontime delivery and customer service is our main motto.</ul></string>
+    <string name="feature"><ul>
+              <li>Prevents Moisture, Condensation damages, Container Sweat, Container Rain   while Sea Transport </li>
+              <li>Low expenses than Silica Gel Per container </li>
+              <li>Absorbtion more than 200% </li>
+              <li>Non - toxic and Eco friendly </li>
+              <li>Long Lasting until the complete voyage </li>
+              <li>No DMF - No Biocides</li>
+              <li>Leak proof - dual layer packed </li>
+              <li>Easy Installation </li>
+        </ul></string>
 
 </resources>

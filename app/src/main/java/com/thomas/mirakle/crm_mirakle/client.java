@@ -1,43 +1,33 @@
 package com.thomas.mirakle.crm_mirakle;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class client extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +36,11 @@ public class client extends AppCompatActivity
         ImageView profile;
         ImageButton bg;
         Drawable Right;
-        TextView user_name;
+        TextView user_name,e_mail_,intro,feature;
+        Context mContext;
+        View home_lay,chat_lay,about_lay;
+        Toolbar toolbar;
+
 
     @Override
     protected void onStart() {
@@ -54,22 +48,7 @@ public class client extends AppCompatActivity
         mAuth.addAuthStateListener(mAuthListener);
 
     }
-   /* @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate ( R.layout.nav_header_client, container, false );
-        final Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = dateFormat.format ( date );
-        //String cDate1 = JalaliCalendar.g2j ( currentDate );
-
-        //View view = inflater.inflate(R.layout.fragment_new_customers, container, false);
-        //TextView user_name =rootView.findViewById ( R.id.username );
-
-        String string="this is a text";
-        //user_name.setText ( string );
-        return rootView;
-    }*/
-   public void profileimageclick(View v){
+   /*public void profileimageclick(View v){
        mAuth=FirebaseAuth.getInstance();
        FirebaseUser user=mAuth.getCurrentUser();
        String user_=user.getDisplayName();
@@ -80,19 +59,73 @@ public class client extends AppCompatActivity
        TextView e_mail_=findViewById(R.id.e_mail);
        e_mail_.setVisibility(View.VISIBLE);
        e_mail_.setText(e_mail);
-   }
+
+       //profile.setImageURI(image_url);
+
+   }*/
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
-        //View rootView = inflater.inflate ( R.layout.fragment_new_customers, container, false );
         mAuth=FirebaseAuth.getInstance();
         FirebaseUser user=mAuth.getCurrentUser();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        bg=findViewById(R.id.profile_bg);
 
+
+        //home page content
+        intro=findViewById(R.id.intro);
+        intro.setText(Html.fromHtml("<html><head></head><body><ol><li>\t<b>Dry Air Technologies </b>- India is an well established manufacturing organization of specially <b>Container Desiccants</b> since <u>2007</u>.</li>\n" +
+                "<li>\t\tIt is well equipped and serving all types of exporters globally to prevent their Export goods from moisture and condensation issues by a well Technical experts. </li>"+
+                "<li>\t\tWe offer wide range of container desiccants in various sizes and types which ever fits the customer needs.\n</li>" +
+                "<li>\t\tWe shall provide an <b>error free service</b> and timely delivery at any where globally.\n</li>" +
+                "<li>\t\t<b>Ontime delivery</b> and customer service is our main motto.</li></ol></body></html>"));
+        feature=findViewById(R.id.feature);
+        feature.setText(Html.fromHtml("<ul>\n" +
+                "<li>\t\tPrevents Moisture, Condensation damages, Container Sweat, Container Rain   while Sea Transport </li>\n" +
+                "<li>\t\tLow expenses than Silica Gel Per container </li>\n" +
+                "<li>\t\tAbsorbtion more than 200% </li>\n" +
+                "<li>\t\tNon - toxic and Eco friendly </li>\n" +
+                "<li>\t\tLong Lasting until the complete voyage </li>\n" +
+                "<li>\t\tNo DMF - No Biocides</li>\n" +
+                "<li>\t\tLeak proof - dual layer packed </li>\n" +
+                "<li>\t\tEasy Installation </li>\n" +
+                "</ul>"));
+        home_lay = findViewById(R.id.home_for_client);
+        about_lay=findViewById(R.id.about_for_client);
+        toolbar=findViewById(R.id.toolbar);
+
+
+        String user_= user != null ? user.getDisplayName() : "";
+        String e_mail= user != null ? user.getEmail() : "";
+        user_name=findViewById(R.id.username);
+        user_name.setVisibility(View.VISIBLE);
+        user_name.setText(user_);
+        e_mail_ = findViewById(R.id.e_mail);
+        e_mail_.setVisibility(View.VISIBLE);
+        e_mail_.setText(e_mail);
+
+
+
+
+
+        Uri image_url= user != null ? user.getPhotoUrl() : null;
+        //Toast.makeText(this, ""+image_url, Toast.LENGTH_SHORT).show();
+        //Log.d("mirakle", "profileimageclick: "+image_url);
+        //ImageView profile=findViewById(R.id.sample_try);
+
+        ImageView cool=findViewById(R.id.sample_try);
+
+        Glide.with(client.this)
+                .load(image_url)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(cool);
+        //Picasso.with(client.this)
+          //      .load(image_url)
+            //    .into(cool);
 
 
         //String user_=user.getDisplayName();
@@ -103,9 +136,6 @@ public class client extends AppCompatActivity
 
 
 
-
-
-        profile=findViewById(R.id.profile);
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -175,17 +205,21 @@ public class client extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
+            home_lay.setVisibility(View.VISIBLE);
+            about_lay.setVisibility(View.INVISIBLE);
+            //toolbar.setTitle("Home");
+        } else if (id == R.id.nav_chat) {
+            //home_lay.setVisibility(View.INVISIBLE);
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_about) {
+            home_lay.setVisibility(View.INVISIBLE);
+            about_lay.setVisibility(View.VISIBLE);
+            //toolbar.setTitle("About");
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_help) {
 
         }
         else if (id==R.id.logout_btn){

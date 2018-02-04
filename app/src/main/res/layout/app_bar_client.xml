@@ -16,11 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Home" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_client" />
+    <include
+        android:id="@+id/home_for_client"
+        layout="@layout/content_client"
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/about_for_client"
+        layout="@layout/about"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/rate_app_for_client"
+        layout="@layout/rate_app"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/lead_for_client"
+        layout="@layout/lead"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/history__for_client"
+        layout="@layout/history"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/feedback"
+        layout="@layout/feedback"
+        android:visibility="invisible" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
