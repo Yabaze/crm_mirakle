@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/chat_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -44,6 +44,11 @@
     <include
         android:id="@+id/history__for_client"
         layout="@layout/history"
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/nav_chat_client"
+        layout="@layout/chat_client"
         android:visibility="invisible" />
 
     <include

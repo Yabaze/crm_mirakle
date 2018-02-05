@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -20,14 +19,26 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class client extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,7 +51,9 @@ public class client extends AppCompatActivity
         Context mContext;
         View home_lay,chat_lay,about_lay;
         Toolbar toolbar;
-
+        EditText msg;
+        Button msg_button;
+        FloatingActionButton fab;
 
     @Override
     protected void onStart() {
@@ -69,8 +82,11 @@ public class client extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
         mAuth=FirebaseAuth.getInstance();
-        FirebaseUser user=mAuth.getCurrentUser();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final FirebaseUser user=mAuth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myuser = database.getReference("Users");
+        final DatabaseReference myRef = database.getReference("chat");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -94,7 +110,8 @@ public class client extends AppCompatActivity
                 "</ul>"));
         home_lay = findViewById(R.id.home_for_client);
         about_lay=findViewById(R.id.about_for_client);
-        toolbar=findViewById(R.id.toolbar);
+        chat_lay=findViewById(R.id.nav_chat_client);
+        toolbar=findViewById(R.id.chat_toolbar);
 
 
         String user_= user != null ? user.getDisplayName() : "";
@@ -107,7 +124,20 @@ public class client extends AppCompatActivity
         e_mail_.setText(e_mail);
 
 
+        msg_button=findViewById(R.id.msg_send);
+        msg=findViewById(R.id.msg);
+        msg_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                myRef.child(user.getDisplayName()).push().setValue(msg.getText().toString());
+                if(user!=null) {
+                    //myuser.child("user").push().setValue(user.getDisplayName());
+                }
+                //Toast.makeText(client.this, myuser.child("user").child(user.getDisplayName()) +"   "+msg.getText().toString(),Toast.LENGTH_SHORT).show();
+                msg.setText("");
+            }
+        });
 
 
         Uri image_url= user != null ? user.getPhotoUrl() : null;
@@ -149,7 +179,7 @@ public class client extends AppCompatActivity
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -207,13 +237,22 @@ public class client extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             home_lay.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            chat_lay.setVisibility(View.INVISIBLE);
             about_lay.setVisibility(View.INVISIBLE);
             //toolbar.setTitle("Home");
         } else if (id == R.id.nav_chat) {
             //home_lay.setVisibility(View.INVISIBLE);
+            home_lay.setVisibility(View.INVISIBLE);
+            chat_lay.setVisibility(View.VISIBLE);
+            about_lay.setVisibility(View.INVISIBLE);
+            fab.setVisibility(View.INVISIBLE);
+
 
         } else if (id == R.id.nav_about) {
             home_lay.setVisibility(View.INVISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            chat_lay.setVisibility(View.INVISIBLE);
             about_lay.setVisibility(View.VISIBLE);
             //toolbar.setTitle("About");
 

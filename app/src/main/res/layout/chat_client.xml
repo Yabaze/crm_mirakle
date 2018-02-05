@@ -1,7 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/chat_lay"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/chat_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/chat_toolbar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/chat_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Chatting"></android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="537dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="60dp"
+        android:layout_y="56dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/msg"
+        android:layout_width="299dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_x="10dp"
+        android:layout_y="597dp"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/msg_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <Button
+        android:id="@+id/msg_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_x="314dp"
+        android:layout_y="597dp"
+        android:background="@android:drawable/ic_menu_send"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/msg"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 </android.support.constraint.ConstraintLayout>

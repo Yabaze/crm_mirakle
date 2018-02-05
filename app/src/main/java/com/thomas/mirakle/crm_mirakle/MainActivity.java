@@ -46,6 +46,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     Drawable Right,Right1;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth.AuthStateListener mAuthListener;
     LoginButton fbloginButton;
+    FirebaseUser user;
+    DatabaseReference myuser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         mAuth = FirebaseAuth.getInstance();
+        user=mAuth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myuser = database.getReference("Users");
         callbackManager = CallbackManager.Factory.create();
         resource();
         fbloginButton = (LoginButton) findViewById(R.id.fb_login_button);
@@ -195,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
@@ -212,6 +220,9 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
+                        }
+                        if(user != null) {
+                            //myuser.child("user").push().setValue(user.getDisplayName());
                         }
 
                         // ...
