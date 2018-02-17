@@ -4,6 +4,11 @@
 
     <permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -54,7 +59,20 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".forgot_password"></activity>
+        <activity android:name=".forgot_password" />
+        <activity
+            android:name=".potential_layout"
+            android:label="@string/title_activity_potential_layout"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".superadmin_layout"
+            android:label="@string/title_activity_superadmin_layout"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".admin_layout"
+            android:label="@string/title_activity_admin_layout"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".add_event_activity"></activity>
     </application>
 
 </manifest>

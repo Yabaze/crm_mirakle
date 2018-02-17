@@ -41,5 +41,8 @@
               <li>Leak proof - dual layer packed </li>
               <li>Easy Installation </li>
         </ul></string>
+    <string name="title_activity_potential_layout">potential_layout</string>
+    <string name="title_activity_superadmin_layout">superadmin_layout</string>
+    <string name="title_activity_admin_layout">admin_layout</string>
 
 </resources>

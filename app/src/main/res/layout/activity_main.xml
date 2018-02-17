@@ -116,8 +116,7 @@
         android:id="@+id/twitter"
         android:layout_width="60dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="200dp"
         android:background="@drawable/twitter"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -153,16 +152,26 @@
         android:layout_width="60dp"
         android:layout_height="46dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="100dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginBottom="144dp"
+        android:layout_marginStart="28dp"
         android:background="@drawable/facebook"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:foreground="@drawable/facebook"
         android:textAlignment="center"
         android:textColor="@color/cardview_shadow_end_color"
         android:textSize="36sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/sample_yab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="320dp"
+        android:layout_marginTop="304dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

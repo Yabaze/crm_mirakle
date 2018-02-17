@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,14 +47,25 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.sdsmdg.tastytoast.TastyToast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
     Drawable Right,Right1;
     AutoCompleteTextView username;
     TextInputLayout username_layout,password_layout;
     EditText password;
+    ProgressBar progressBar;
 
     Button login_btn,twitter,forgot,signInButton;
     TextView log;
@@ -67,7 +79,14 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     LoginButton fbloginButton;
     FirebaseUser user;
+    //Firebase usersRef;
     DatabaseReference myuser;
+    database_helper db;
+    String type_user;
+    Button sample_yab;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         mAuth = FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
+        type_user=new String();
+       // if (user != null) {
+        //    type_user=db.checkmail(user.getEmail());
+        //}
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myuser = database.getReference("Users");
         callbackManager = CallbackManager.Factory.create();
@@ -88,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
         signInButton = findViewById(R.id.g_signin_button);
 
+        db=new database_helper();
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
               .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -97,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser()!=null){
-                    Intent intent=new Intent(MainActivity.this,client.class);
-                    startActivity(intent);
+                    Log.e("firbasemail",""+firebaseAuth.getCurrentUser().getEmail());
+                    //type_user=
+                    db.checkmail(firebaseAuth.getCurrentUser().getEmail(),getApplicationContext());
                 }
             }
         };
@@ -112,18 +139,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        /*
+        myuser = myuser.child("Users");
+        Map<String, String> userData = new HashMap<String, String>();
+
+        userData.put("Nombre", "Yabaze");
+        userData.put("Password", "Password");
+        userData.put("Confirmed", "FALSE");
+        userData.put("Email", "cool_baby");
+
+        myuser.setValue("yabaze");
+        myuser = myuser.child("Users").child("yabaze");
+        myuser.setValue(userData);
+        */
+
+
+        //trial
+        sample_yab=findViewById(R.id.sample_yab);
+        sample_yab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sample_cal=new Intent(MainActivity.this,add_event_activity.class);
+                startActivity(sample_cal);
+            }
+        });
+
+
+
 
         fbloginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
-                //Intent forward=new Intent(MainActivity.this,client.class);
-                //startActivity(forward);
-                //finish();
                 Log.d("sucess", "facebook:onSuccess:" + loginResult);
-                Intent forward=new Intent(MainActivity.this,client.class);
-                startActivity(forward);
-                finish();
                 handleFacebookAccessToken(loginResult.getAccessToken());
 
             }
@@ -149,10 +196,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // App code
                         Log.d("TAG", "Success");
-
-                        Intent forward=new Intent(MainActivity.this,client.class);
-                        startActivity(forward);
-                        //finish();
                     }
 
                     @Override
@@ -206,19 +249,16 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
-
-                            Intent forward=new Intent(MainActivity.this,client.class);
-                            startActivity(forward);
-                            finish();
-
+                            TastyToast.makeText(getApplicationContext(), "Login Success", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            TastyToast.makeText(getApplicationContext(), "Authentication failed.", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                             //updateUI(null);
                         }
                         if(user != null) {
@@ -252,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        Log.d("Firebase Authentication processed", "firebaseAuthWithGoogle:" + account.getId());
+       // Log.d("Firebase Authentication processed", "firebaseAuthWithGoogle:" + account.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -262,9 +302,12 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d("Success", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            db.checkmail(user.getEmail(),getApplicationContext());
                         } else {
                             Log.w("Failed", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            TastyToast.makeText(getApplicationContext(), "Authentication failed.", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                         }
                     }
                 });
@@ -273,9 +316,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        mAuth.addAuthStateListener(mAuthListener);
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //mAuth.addAuthStateListener(mAuthListener);
     }
     public void showDialog() throws Resources.NotFoundException {
         new AlertDialog.Builder(this)
@@ -293,7 +336,9 @@ public class MainActivity extends AppCompatActivity {
                                                 int which) {
                                 //Do Something Here
                                 //Intent intent=new Intent(MainActivity.this,admin_page.class);
-                                Toast.makeText(MainActivity.this,"I'm always Fine",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(MainActivity.this,"I'm always Fine",Toast.LENGTH_LONG).show();
+                                TastyToast.makeText(getApplicationContext(), "I'm always Fine", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                             }
                         })
                 .setNegativeButton(
@@ -385,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
         password.addTextChangedListener(new MyTextWatcher(password));
         username.setCompoundDrawables( Right, null, null, null );
         password.setCompoundDrawables( Right1, null, null, null );
-        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/AppleMyungjo.ttf");
+        final Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/AppleMyungjo.ttf");
         Typeface typeface1 = Typeface.createFromAsset(getAssets(),"fonts/cool.ttf");
 
         forgot.setText(Html.fromHtml("<STRONG><color=\"BLACK\"><u>Forgot Password..?</u><color></STRONG>"));
@@ -407,28 +452,31 @@ public class MainActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.e("cool", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        Toast.makeText(MainActivity.this, "Wait Please" + user.getEmail(), Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MainActivity.this, client.class);
-                                        startActivity(intent);
+
+                                        //Toast.makeText(MainActivity.this, "Wait Please" + user.getEmail(), Toast.LENGTH_LONG).show();
+                                        TastyToast.makeText(getApplicationContext(), "Welcome "+user.getEmail(), TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+
+                                        Log.e("firbasemail",""+user.getEmail());
+                                        //type_user=
+                                                db.checkmail(user.getEmail(),getApplicationContext());
 
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("coolest", "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(MainActivity.this, "You Entered Wrong Userame Password",
-                                                Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "You Entered Wrong Userame Password", Toast.LENGTH_SHORT).show();
+                                        TastyToast.makeText(getApplicationContext(), "You Entered Wrong Username and Password.", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                                     }
                                 }
                             });
-
                     }
                     else{
                     validatePassword();
                     validateusername();
                 }
-
-
             }
         });
     }
+
 
 }

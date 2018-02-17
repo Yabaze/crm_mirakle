@@ -1,9 +1,7 @@
 package com.thomas.mirakle.crm_mirakle;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,61 +19,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class client extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
         FirebaseAuth mAuth;
         FirebaseAuth.AuthStateListener mAuthListener;
-        ImageView profile;
-        ImageButton bg;
-        Drawable Right;
         TextView user_name,e_mail_,intro,feature;
-        Context mContext;
         View home_lay,chat_lay,about_lay;
-        Toolbar toolbar;
         EditText msg;
         Button msg_button;
         FloatingActionButton fab;
-
+        String message="";
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-
     }
-   /*public void profileimageclick(View v){
-       mAuth=FirebaseAuth.getInstance();
-       FirebaseUser user=mAuth.getCurrentUser();
-       String user_=user.getDisplayName();
-       String e_mail=user.getEmail();
-       user_name=findViewById(R.id.username);
-       user_name.setVisibility(View.VISIBLE);
-       user_name.setText(user_);
-       TextView e_mail_=findViewById(R.id.e_mail);
-       e_mail_.setVisibility(View.VISIBLE);
-       e_mail_.setText(e_mail);
-
-       //profile.setImageURI(image_url);
-
-   }*/
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +54,11 @@ public class client extends AppCompatActivity
         mAuth=FirebaseAuth.getInstance();
         final FirebaseUser user=mAuth.getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myuser = database.getReference("Users");
         final DatabaseReference myRef = database.getReference("chat");
         Toolbar toolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(toolbar);
 
 
-        //home page content
         intro=findViewById(R.id.intro);
         intro.setText(Html.fromHtml("<html><head></head><body><ol><li>\t<b>Dry Air Technologies </b>- India is an well established manufacturing organization of specially <b>Container Desiccants</b> since <u>2007</u>.</li>\n" +
                 "<li>\t\tIt is well equipped and serving all types of exporters globally to prevent their Export goods from moisture and condensation issues by a well Technical experts. </li>"+
@@ -129,21 +97,20 @@ public class client extends AppCompatActivity
         msg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                myRef.child(user.getDisplayName()).push().setValue(msg.getText().toString());
-                if(user!=null) {
-                    //myuser.child("user").push().setValue(user.getDisplayName());
+                if(user.getDisplayName()!=null){
+                    message=user.getDisplayName();
                 }
-                //Toast.makeText(client.this, myuser.child("user").child(user.getDisplayName()) +"   "+msg.getText().toString(),Toast.LENGTH_SHORT).show();
+                else{
+                    message = "Yabaze";
+                    // bundle.getString("email");
+                }
+                myRef.child(message).push().setValue(msg.getText().toString());
                 msg.setText("");
             }
         });
 
 
         Uri image_url= user != null ? user.getPhotoUrl() : null;
-        //Toast.makeText(this, ""+image_url, Toast.LENGTH_SHORT).show();
-        //Log.d("mirakle", "profileimageclick: "+image_url);
-        //ImageView profile=findViewById(R.id.sample_try);
 
         ImageView cool=findViewById(R.id.sample_try);
 
@@ -153,17 +120,6 @@ public class client extends AppCompatActivity
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(cool);
-        //Picasso.with(client.this)
-          //      .load(image_url)
-            //    .into(cool);
-
-
-        //String user_=user.getDisplayName();
-        //final TextView user_name;
-        //user_name = (TextView) rootView.findViewById(R.id.username);
-
-        //user_name=
-
 
 
         mAuthListener=new FirebaseAuth.AuthStateListener() {
@@ -176,7 +132,6 @@ public class client extends AppCompatActivity
                 }
             }
         };
-
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
