@@ -20,7 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_potential_layout" />
+    <include
+        android:id="@+id/home_event_for_potential"
+        layout="@layout/content_potential_layout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -37,6 +37,8 @@ public class potential_layout extends AppCompatActivity
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseDatabase database;
 
+    View potential_event;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,7 @@ public class potential_layout extends AppCompatActivity
         myuser = database.getReference("Users");
         myRef = database.getReference("chat");
 
-
+        potential_event=findViewById(R.id.home_event_for_potential);
 
 
         String user_= user != null ? user.getDisplayName() : "";

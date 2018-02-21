@@ -44,5 +44,26 @@
     <string name="title_activity_potential_layout">potential_layout</string>
     <string name="title_activity_superadmin_layout">superadmin_layout</string>
     <string name="title_activity_admin_layout">admin_layout</string>
-
+    <string-array name="tables">
+        <item name="admin">Admin</item>
+        <item name="potential">Potential</item>
+        <item name="client">Client</item>
+        <item name="superadmin">Superadmin</item>
+    </string-array>
+    <string-array name="lead_source">
+        <item>-None-</item>
+        <item>Advertisement</item>
+        <item>Call</item>
+        <item>Employee Referral</item>
+        <item>External Referral</item>
+        <item>Online</item>
+    </string-array>
+    <string-array name="lead_status">
+        <item>-None-</item>
+        <item>Attempt to Contact</item>
+        <item>Contact in Future</item>
+        <item>Contacted</item>
+        <item>Junk Lead</item>
+        <item>Lost Lead</item>
+    </string-array>
 </resources>
